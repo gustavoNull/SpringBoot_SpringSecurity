@@ -1,5 +1,6 @@
 package com.cun.security3.config;
 
+import com.cun.security3.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,8 +12,7 @@ import java.util.Set;
  *  ① 定义 user 对象
  */
 public class SelfUserDetails implements UserDetails, Serializable {
-    private String username;
-    private String password;
+    private User user;
     private Set<? extends GrantedAuthority> authorities;
 
     @Override
@@ -26,20 +26,16 @@ public class SelfUserDetails implements UserDetails, Serializable {
 
     @Override
     public String getPassword() { // 最重点Ⅰ
-        return this.password;
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() { // 最重点Ⅱ
-        return this.username;
+        return this.user.getUsername();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
