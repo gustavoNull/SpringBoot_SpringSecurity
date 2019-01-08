@@ -20,18 +20,18 @@ import java.util.Set;
 public class SelfAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     SelfUserDetailsService userDetailsService;
+    @Autowired
+    BCryptPasswordEncoder encoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = (String) authentication.getPrincipal(); // 这个获取表单输入中返回的用户名;
         String password = (String) authentication.getCredentials(); // 这个是表单中输入的密码；
 
-        Md5PasswordEncoder md5PasswordEncoder = new Md5PasswordEncoder();
-        String encodePwd = md5PasswordEncoder.encodePassword(password, userName);
-
         UserDetails userInfo = userDetailsService.loadUserByUsername(userName);
 
-        if (!userInfo.getPassword().equals(encodePwd)) {
+
+        if (!encoder.matches(password, userInfo.getPassword())) {
             throw new BadCredentialsException("用户名密码不正确，请重新登陆！");
         }
 
