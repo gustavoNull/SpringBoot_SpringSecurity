@@ -16,4 +16,6 @@
   "password": "$2a$10$yZzSDC2pBLfRNfpWPoBEE.wy766JwPcMiq5lQb2KuK9ewSM4hZc1S"
 }
 ```
+  5. 如果login是用户名或密码错误，例如：localhost:80/login?username=admin&password=root1232
+    返回：{"msg":"Login Failure!","status":"400"}
   
